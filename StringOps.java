@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class StringOps {
     ////////////////////////////////////////////////////////////
     //////                                               ///////
@@ -24,161 +22,109 @@ public class StringOps {
     //////                                               ///////
     ////////////////////////////////////////////////////////////
     public static void main(String[] args) {
-        String str="Hello    World Hi";
-        System.out.println(removeSpaces(str));
-        testCapVowelsLowRest();
-        testCamelCase()
-        testallIndexOf();
+        // String test = "Hello World";
+       // String test2 = "One two tHRee world";
+       // System.err.println(capVowelsLowRest(test2));
+     //   System.err.println(camelCase(test));
+        
     }
 
-public static void testCapVowelsLowRest () {
-        String str = "One two tHRee world";
-        String result1 = capVowelsLowRest(str);
-        System.out.println("CapVowelsLowRest: " + result1);
-   } 
+    public static String capVowelsLowRest (String string) {
+        String isSolution = "";
 
-   public static String capVowelsLowRest(String string) {
-    String newStr = "";
-    boolean lastCharWasSpace = false;
+        for (int j = 0; j < string.length(); j++) {
+            char currentChar = string.charAt(j);
 
-    for (int i = 0; i < string.length(); i++) {
-        char currentChar = string.charAt(i);
+            if(currentChar=='a' || currentChar=='i' || currentChar=='e' ||
+             currentChar=='o' || currentChar=='u'){
+                isSolution += (char)(currentChar - 32);
+            } else if(currentChar=='A' || currentChar=='I' || currentChar=='E' ||
+             currentChar=='O' || currentChar=='U')  {
+                isSolution += currentChar;
 
-        if (currentChar == ' ') {
-            lastCharWasSpace = true;
+
+            } else if (currentChar >= 'A' && currentChar <= 'Z') {
+            isSolution +=  (char)(currentChar + 32);  
+ 
         } else {
-            if (lastCharWasSpace) {
-                newStr += Character.toLowerCase(currentChar);
-            } else {
-                if (currentChar == 'a' || currentChar == 'e' || currentChar == 'i'
-                        || currentChar == 'o' || currentChar == 'u') {
-                    newStr += Character.toUpperCase(currentChar);
-                } else if (currentChar >= 'A' && currentChar <= 'Z') {
-                    newStr += Character.toLowerCase(currentChar);
-                } else {
-                    newStr += currentChar;
+            isSolution += currentChar; 
+
+       }
+
+   }
+        return isSolution;
+
+ }
+
+    public static String camelCase (String string) {
+            String isSolution = "";
+            boolean isFirst = false;
+    
+            for (int i = 0; i < string.length(); i++) {
+                char currentChar = string.charAt(i);
+    
+                // space case (ignore)
+                // if (currentChar == ' ') {
+                // continue;
+                // }
+    
+                if (i > 0) {
+                    // first char at word that isn't the first word (need to be upper case)
+                    if (currentChar > ' ' && string.charAt(i - 1) == ' ' && isFirst) {
+                        if (currentChar >= 'a' && currentChar <= 'z') {
+                            isSolution += (char) (currentChar - 32);
+                        } else {
+                            isSolution += currentChar;
+                        }
+                        // continue;
+                    }
+    
+                    if (currentChar > ' ' && string.charAt(i - 1) > ' ' && i > 0) {
+                        // any other char (need to be lower case)
+                        if (currentChar >= 'A' && currentChar <= 'Z') {
+                            isSolution += (char) (currentChar + 32);
+                        } else {
+                            isSolution += currentChar;
+                        }
+                    }
+                }
+    
+                // first letter in the string
+                if (currentChar > ' ' && !isFirst) {
+                    isFirst = true;
+                    if (currentChar >= 'A' && currentChar <= 'Z') {
+                        isSolution += (char) (currentChar + 32);
+                    } else {
+                        isSolution += currentChar;
+                    }
+                    // continue;
                 }
             }
-            lastCharWasSpace = false;
-        }
-    }
-
-    return newStr;
-}
-
-
-
-
-public static String camelCase (String string) {
-    String str = "";
-    boolean isLastSpace = true;
-    int isFoundFirstWord = 0;
-    char ch = ' ';
-    for(int i = 0; i< string.length(); i++){
-        if(string.charAt(i) == ' '){
-            isLastSpace = true;
-        } else {
-            //processing the characters but spaces
-            if (isLastSpace == true) {
-                ///begining of word
-                isLastSpace = false;
-                // convert char to uppercase
-
-                switch (isFoundFirstWord){
-                    case 0:
-                        ch = convertLowerCase(string.charAt(i));
-                        isFoundFirstWord = 1;
-                    break;
-                    case 1:
-                        ch = convertUpperCase(string.charAt(i));
-                    break;
-                }                    
-            } else {
-                // convert char to lowcase
-                ch = convertLowerCase(string.charAt(i));
-            }
-            //add char to str
-            str = str + ch;
-        }                
-    }    
-    return str;
-}
-
-public static Boolean isUpperCase (char ch){
-       return (ch >= 'A'&& ch <= 'Z' );      
-}
-
-public static char convertUpperCase( char ch) {
-    if(isUpperCase(ch) == false){
-        return (char)(ch - 32);
-    } else {
-        return ch;
-    }
-}
-
-public static char convertLowerCase( char ch) {
-    if(isUpperCase(ch) == true){
-        return (char)(ch + 32);
-    } else {
-        return ch;
-    }
-}
-
-public static void testcamelCase() {
-    String expecteString = "helloWorld";
-    String camelcase;
-    camelcase = camelCase("Hello World");
-    varifycamelCase(expecteString, camelcase);
-    expecteString = "helloWorld";
-    camelcase = camelCase("HELLO    world");
-    varifycamelCase(expecteString, camelcase);
-    expecteString = "introToComputerScience";
-    camelcase = camelCase("Intro to coMPUter sCIEncE");
-    varifycamelCase(expecteString, camelcase);
-
-}
-public static void varifycamelCase (String expected, String actual){
-        System.out.printf("The new string is %s \n",actual);
-}
-        public static void testallIndexOf() {
-            int expected [] = {2, 3, 9};
-            char characterToFind = 'l';
-            int[] allIndexOf = allIndexOf("Hello world",characterToFind);
-            varifyAllIndexOf(expected, allIndexOf);
-           
     
+            return isSolution;
         }
-        public static void varifyAllIndexOf (int[] expected, int[] actual) {
-                System.out.printf("The new array is %s \n",Arrays.toString(actual));  
-        }
-        public static int[] allIndexOf (String string, char chr) {
-            int count = 0;
-            int arr[];
-            int index = 0;
-            for(int i = 0; i < string.length(); i++){
-               if(string.charAt(i) == chr){
+
+    public static int[] allIndexOf (String string, char chr) {
+        int count = 0;
+        for (int i = 0; i < string.length(); i++) {
+            if(string.charAt(i) == chr){
                 count++;
-               }
             }
-            arr = new int[count];
-            for(int i = 0; i < string.length(); i++){
-                if(string.charAt(i) == chr){
-                    arr[index] = i;
-                    index++;
-                }
-            }
-            return  arr;
         }
 
-        public static void testallIndexOf() {
-            int expected [] = {2, 3, 9};
-            char characterToFind = 'l';
-            int[] allIndexOf = allIndexOf("Hello world",characterToFind);
-            varifyAllIndexOf(expected, allIndexOf);
-           
-    
+        int[]isSolution = new int [count];
+        int index = 0;
+        for (int i = 0; i < string.length(); i++) {
+           if(string.charAt(i) == chr){
+            isSolution[index] = i;
+            index++;
+           }
         }
-        public static void varifyAllIndexOf (int[] expected, int[] actual) {
-                System.out.printf("The new array is %s \n",Arrays.toString(actual));  
+
+        return isSolution ;
+
+            
         }
+
+
     }
