@@ -37,24 +37,35 @@ public static void testCapVowelsLowRest () {
         System.out.println("CapVowelsLowRest: " + result1);
    } 
 
-public static String capVowelsLowRest(String string) {
+   public static String capVowelsLowRest(String string) {
     String newStr = "";
+    boolean lastCharWasSpace = false;
+
     for (int i = 0; i < string.length(); i++) {
         char currentChar = string.charAt(i);
-        if (currentChar == 'a' || currentChar == 'e' || currentChar == 'i'
-                || currentChar == 'o' || currentChar == 'u') {
-            int temp = currentChar - 'a' + 'A'; // Convert to uppercase
-            newStr += (char) temp;
-        } else if (currentChar >= 'A' && currentChar <= 'Z') {
-            int temp = currentChar + 'a' - 'A'; // Convert to lowercase
-            newStr += (char) temp;
+
+        if (currentChar == ' ') {
+            lastCharWasSpace = true;
         } else {
-            newStr += currentChar;
+            if (lastCharWasSpace) {
+                newStr += Character.toLowerCase(currentChar);
+            } else {
+                if (currentChar == 'a' || currentChar == 'e' || currentChar == 'i'
+                        || currentChar == 'o' || currentChar == 'u') {
+                    newStr += Character.toUpperCase(currentChar);
+                } else if (currentChar >= 'A' && currentChar <= 'Z') {
+                    newStr += Character.toLowerCase(currentChar);
+                } else {
+                    newStr += currentChar;
+                }
+            }
+            lastCharWasSpace = false;
         }
     }
 
     return newStr;
 }
+
 
 
 
