@@ -37,26 +37,25 @@ public static void testCapVowelsLowRest () {
         System.out.println("CapVowelsLowRest: " + result1);
    } 
 
-   public static String capVowelsLowRest (String string) {
+   public static String capVowelsLowRest(String string) {
     String newStr = "";
-    for (int i = 0; i < string.length(); i++){
-        if (string.charAt(i) == 'a' || string.charAt(i) == 'e' || string.charAt(i) == 'i'
-            || string.charAt(i) == 'o' || string.charAt(i) == 'u' || string.charAt(i) == 'A' 
-            ||string.charAt(i) == 'E' ||string.charAt(i) == 'I' ||string.charAt(i) == 'O' ||string.charAt(i) == 'U'){
-            int temp = string.charAt(i) - 32;
-            newStr = newStr + (char) temp; 
-        }
-        else if (string.charAt(i) >= 'A' && string.charAt(i) <= 'Z'){
-            int temp = string.charAt(i) + 32;
-            newStr = newStr + (char) temp; 
-        }
-        else {
-            newStr = newStr + string.charAt(i);
+    for (int i = 0; i < string.length(); i++) {
+        char currentChar = string.charAt(i);
+        if (currentChar == 'a' || currentChar == 'e' || currentChar == 'i'
+                || currentChar == 'o' || currentChar == 'u') {
+            int temp = currentChar - 'a' + 'A'; // Convert to uppercase
+            newStr = newStr + (char) temp;
+        } else if (currentChar >= 'A' && currentChar <= 'Z') {
+            int temp = currentChar + 'a' - 'A'; // Convert to lowercase
+            newStr = newStr + (char) temp;
+        } else {
+            newStr = newStr + currentChar;
         }
     }
-    
-        return newStr;
+
+    return newStr;
 }
+
 
 public static String camelCase (String string) {
     String str = "";
