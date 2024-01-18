@@ -26,7 +26,7 @@ public class ArrayOps {
 }
 
 public static void testIsSorted () {
-    int[] array = {1, 2, 3};
+    int[] array = {3, 2, 4};
     boolean result = isSorted(array);
     System.out.println("Is sorted :" + result);
 }
@@ -94,11 +94,20 @@ public static void testIsSorted () {
 
     public static boolean isSorted(int [] array) {
         int n = array.length;
+        boolean increasing = true;
         for (int i = 0 ; i < n- 1; i++){
             if (array[i+1] < array[i]) {
-                return false;
+                increasing = false;
+                break;
             }
         }
-        return true;
+        boolean decreasing = true;
+        for (int i = 0; i < n - 1; i++) {
+        if (array[i + 1] > array[i]) {
+            decreasing = false;
+            break;
+        }
+    }
+        return increasing || decreasing;
     }
     }
